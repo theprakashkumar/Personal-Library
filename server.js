@@ -8,6 +8,9 @@ require('dotenv').config();
 const apiRoutes         = require('./routes/api.js');
 const fccTestingRoutes  = require('./routes/fcctesting.js');
 const runner            = require('./test-runner');
+const { MongoServerSelectionError } = require('mongodb');
+
+const mongoose = require('mongoose');
 
 const app = express();
 
@@ -17,6 +20,15 @@ app.use(cors({origin: '*'})); //USED FOR FCC TESTING PURPOSES ONLY!
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// Connnect to Database
+mongoose.connect(process.env.DB, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false
+})
+.then(() => console.log("Connected 🔥"))
+.catch(err => console.log("Something Went Wrong :(", err));
 
 //Index page (static HTML)
 app.route('/')
