@@ -124,10 +124,11 @@ suite('Functional Tests', function () {
               .post('/api/books')
               .send(book)
               .end(function (err, res) {
+                console.log(res.body)
                 chai.request(server)
-                  .get('/api/books/' + res.body_id)
+                  .get('/api/books/' + res.body._id)
                   .end(function (err, response) {
-                    console.log(response);
+                    //console.log(response);
                     assert.equal(response.status, 200);
                     assert.isObject(response.body);
                     assert.property(response.body, 'commentcount');
