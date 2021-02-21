@@ -83,7 +83,7 @@ module.exports = function (app) {
 
     .delete(function (req, res) {
       let bookid = req.params.id;
-
+      // if bookid does not exist then send error
       if(!bookid){
         return res.send('no book exists');
       }
